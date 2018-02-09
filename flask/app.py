@@ -29,10 +29,10 @@ app = Flask(__name__)
 #
 
 ENABLE_SEARCH = True
-ENABLE_SCHOLAR = False
+ENABLE_SCHOLAR = True
 ENABLE_MEDLINE = True
 ENABLE_SCIELO = True
-ENABLE_GRAPH = False
+ENABLE_GRAPH = True
 
 #
 # Carga de datos
