@@ -294,40 +294,8 @@ def graph():
 
   nodes = request.get_json()
 
-  # TBD: llamar a subgraph.subgraph(G, nodes)
-  # G es el grafo completo de UMLS
-
-  graph_data = {
-    "nodes": [
-      {"name": "Node1"},
-      {"name": "Node2"},
-      {"name": "Node3"},
-      {"name": "Node4"},
-      {"name": "Node5"},
-      {"name": "Node6"},
-      {"name": "Node7"},
-      {"name": "Node8"},
-      {"name": "Node9"},
-      {"name": "Node10"}
-    ],
-    "edges": [
-      {"source": 0, "target": 1, "label": "relation"},
-      {"source": 0, "target": 2},
-      {"source": 0, "target": 3},
-      {"source": 0, "target": 4},
-      {"source": 1, "target": 5},
-      {"source": 2, "target": 5},
-      {"source": 2, "target": 5},
-      {"source": 3, "target": 4},
-      {"source": 5, "target": 8},
-      {"source": 5, "target": 9},
-      {"source": 6, "target": 7},
-      {"source": 7, "target": 8},
-      {"source": 8, "target": 9}
-    ]
-  };
-
   if ENABLE_GRAPH:
+    graph_data = graph.subgraph(umls_graph, nodes)
     return jsonify(graph_data);
 
   return jsonify([]);
