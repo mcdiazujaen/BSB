@@ -1,8 +1,3 @@
-'''
-Created on 28 ene. 2018
-
-@author: plubeda
-'''
 import subprocess
 import xml.etree.ElementTree as ET
 import os
