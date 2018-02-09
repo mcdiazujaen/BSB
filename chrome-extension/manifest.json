@@ -1,0 +1,29 @@
+{
+  "manifest_version": 2,
+
+  "name": "BSB",
+  "description": "Buscador Semántico Biomédico",
+  "version": "1.0",
+
+  "permissions": [
+     "activeTab", "tabs"
+   ],
+
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["post.js"]
+    }
+  ],
+
+   "background": {
+     "scripts": ["background.js"],
+     "persistent": false
+   },
+
+  "browser_action": {
+   "default_icon": "icon.png",
+   "default_title": "Lanzar analisis semantico"
+  }
+
+}

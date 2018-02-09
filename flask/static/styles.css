@@ -1,0 +1,62 @@
+/* CSS Navegación
+-------------------------------------------------- */
+
+.topnav {
+  overflow: hidden;
+  background-color: #d1ecf1;
+  color:black
+}
+
+.topnav a {
+  float: left;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #28a745;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #28a745;
+  color: black;
+}
+
+.entity{
+  font-size: 80%;
+}
+
+.sidenav {
+  background-color: #f1f1f1;
+  height: 100%;
+}
+
+.tabcontent {
+  border:1px solid;
+  border-top-style: none;
+  border-color: #ddd;
+  border-bottom-left-radius: .25rem;
+  border-bottom-right-radius: .25rem;
+}
+
+.label-entity{
+  margin: 3px;
+  margin-bottom: 6px;
+}
+
+.fieldset-checkbox{
+  padding: 3px;
+  font-size: 13px;
+}
+
+.dropdown-menu {
+  min-width: 200px;
+}
+
+.dropdown-menu.columns-2 {
+  min-width: 400px;
+}

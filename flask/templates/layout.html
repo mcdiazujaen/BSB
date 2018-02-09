@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Buscador Semántico Biomédico</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  <!-- Custom styles for this template -->
+  <link href="/static/sticky-footer.css" rel="stylesheet">
+  <link href="/static/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<header>
+  <!-- Fixed navbar -->
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark justify-content-between">
+    <a class="navbar-brand" href="#"><img src="/static/icon.png" width="30px"></a>
+    <a class="navbar-brand" href="#">Buscador Semántico Biomédico</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="http://sinai.ujaen.es">Sobre SINAI</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<main role="main" class="container">
+    <div class="row">
+    <!--DIV IZQ-->
+    <div class="col-sm-5">
+      <br/>
+      <h5>Resultado del análisis</h5>
+      <hr>
+      {% block parsed_content %}{% endblock %}
+
+    </div>
+    <!--DIV IZQ-->
+
+    <!--DIV DER-->
+    <div class="col-sm-7">
+      <br/>
+      <h5>Búsquedas semánticas</h5>
+      <hr>
+      {% block entities %}{% endblock %}
+
+      <br/><br/>
+       <!--NAV-->
+      <ul class="nav nav-tabs col-md-12">
+        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#scholar">Google Scholar</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#medline">Medline</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#scielo">SciELO</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#graph">Red semántica</a></li>
+      </ul>
+
+      <div class="tab-content col-md-12 tabcontent">
+        <div id="scholar" class="tab-pane fade active show">
+          {% block scholar %}{% endblock%}
+
+        </div>
+        <div id="medline" class="tab-pane fade">
+          {% block medline %}{% endblock%}
+
+        </div>
+        <div id="scielo" class="tab-pane fade">
+          {% block scielo %}{% endblock%}
+
+        </div>
+
+        <div id="graph" class="tab-pane fade">
+          {% block graph %}{% endblock%}
+
+        </div>
+      </div>
+
+      <!--FIN NAV-->
+
+    </div>
+    <!--DIV DER-->
+
+  </div>
+</main>
+
+<br/><br/>
+<footer class="footer">
+  <div class="container text-center">
+    <span class="text-muted">II Hackathon - Plan TLH - CEATIC - Universidad de Jaén</span>
+  </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="/static/graph.js" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<script>
+
+$(function () {
+  $('[class="badge badge-success entity"]').popover();
+
+  $('#framescholar').on('load', function () {
+     document.getElementById("loaderscholar").style.visibility = "hidden";
+  });
+
+  $('#framemedline').on('load', function () {
+      document.getElementById("loadermedline").style.visibility = "hidden";
+  });
+
+  $('#framescielo').on('load', function () {
+      document.getElementById("loaderscielo").style.visibility = "hidden";
+  });
+
+});
+
+function changeButton(element, button) {
+  if (element.checked) {
+      valueOld = button.value;
+      var array = valueOld.split(" (");
+      var name = array[0];
+      var numbers = array[1];
+      numbers = numbers.replace(')', ''); // 1/12
+      summ = numbers.split("/")[0]; // 1
+      var total = numbers.split("/")[1]; //12
+      summ = parseInt(summ) + 1;
+      button.value = name.concat( " (",summ, "/", total, ")"); 
+
+    }else{
+      valueOld = button.value;
+      var array = valueOld.split(" (");
+      var name = array[0];
+      var numbers = array[1];
+      numbers = numbers.replace(')', ''); // 1/12
+      summ = numbers.split("/")[0]; // 1
+      var total = numbers.split("/")[1]; //12
+      summ = parseInt(summ) - 1;
+      button.value = name.concat( " (",summ, "/", total, ")"); 
+    }
+}
+
+function getCheckboxSelected() {
+  var selected = [];
+  $('.checkbox-sy').each(function() {
+    if ($(this).is(":checked")) {
+      selected.push($(this).attr('value'));
+    };
+  });
+  //alert(selected)
+  if (selected.length > 0) {
+    $.ajax({
+      contentType: 'application/json; charset=utf-8',
+      dataType: 'json',
+      url: 'http://localhost:5000/updateEntities',
+      data: JSON.stringify(selected),
+      type: 'POST',
+      success: function(response){
+        console.log(response);
+      },
+      error: function(error){
+        console.log(error);
+      }
+    });
+    document.getElementById("loadermedline").style.visibility = "visible";
+    document.getElementById("framemedline").contentDocument.location.reload(true);
+
+    document.getElementById("loaderscholar").style.visibility = "visible";
+    document.getElementById("framescholar").contentDocument.location.reload(true);
+
+    document.getElementById("loaderscielo").style.visibility = "visible";
+    document.getElementById("framescielo").contentDocument.location.reload(true);
+
+    document.getElementById("loadergraph").style.visibility = "visible";
+    Graph.draw(selected);
+  }
+}
+
+// First load
+var nodes = [];
+$('.ners').each(function() {
+  nodes.push($(this).attr('value'));
+});
+Graph.draw(nodes);
+
+</script>
+
+</body>
+</html>

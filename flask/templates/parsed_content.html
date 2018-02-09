@@ -1,0 +1,117 @@
+{% extends "layout.html" %}
+
+{% block parsed_content %}
+
+<div class="alert alert-info" role="alert">
+  {{ parsed_text | safe }}
+
+</div>
+
+{% endblock %}
+
+{% block parsed_nav %}
+ 	{{ html_nav | safe }}
+{% endblock %}
+
+<!--ENTITIES-->
+	{% block entities %}
+	
+    <div class="row">
+		{% for ner, value in dic_sy.items() %}
+		<div class="dropdown label-entity">
+			<input class="btn btn-success dropdown-toggle" type="button" id="{{ner|replace(' ', '_')}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="{{ner}} (1/{{value|length}})"/>
+			{% if value|length < 15 %}
+				<!--Menú 1 columna-->
+				<div class="dropdown-menu" aria-labelledby="{{ner|replace(' ', '_')}}">
+			      <fieldset class="fieldset-checkbox">
+			        	{% for sy in value %}
+			        		{% if sy == ner %}
+					        	<input class="checkbox-sy" type="checkbox" value="{{sy}}" checked onclick="changeButton(this, {{ner|replace(' ', '_')}})"/> {{sy}}<br/>
+					        {% else %} 
+					        	<input class="checkbox-sy" type="checkbox" value="{{sy}}" onclick="changeButton(this, {{ner|replace(' ', '_')}})"/> {{sy}}<br/>
+			        		{% endif %}
+				        {% endfor %}
+			      </fieldset>
+			    </div>
+		   {% else %}
+		   		
+
+		   		<!--Menú 2 columnas-->
+		   		<div class="dropdown-menu columns-2" aria-labelledby="{{ner|replace(' ', '_')}}">
+		            <div class="row">
+		            	{% for sy in value %}
+		            		{% if loop.index0 % 2 == 0 %}
+			            	<div class="col-sm-6">
+			            		<fieldset class="fieldset-checkbox">
+				            	{% if sy == ner %}
+					        		<input class="checkbox-sy" type="checkbox" value="{{sy}}" checked  onclick="changeButton(this, {{ner|replace(' ', '_')}})"/> {{sy}}<br/>
+						        {% else %} 
+						        	<input class="checkbox-sy" type="checkbox" value="{{sy}}"  onclick="changeButton(this, {{ner|replace(' ', '_')}})"/> {{sy}}<br/>
+				        		{% endif %}
+				        		</fieldset>
+				        	</div>
+				        	{% endif %}
+				        	{% if loop.index0 % 2 == 1 or loop.last %}
+			            	<div class="col-sm-6">
+			            		<fieldset class="fieldset-checkbox">
+				            	{% if sy == ner %}
+						        	<input class="checkbox-sy" type="checkbox" value="{{sy}}" checked  onclick="changeButton(this, {{ner|replace(' ', '_')}})"/> {{sy}}<br/>
+						        {% else %} 
+						        	<input class="checkbox-sy" type="checkbox" value="{{sy}}"  onclick="changeButton(this, {{ner|replace(' ', '_')}})"/> {{sy}}<br/>
+				        		{% endif %}
+				        		</fieldset>
+				        	</div>
+				        	{% endif %}
+
+				        {% endfor %}
+			         </div>
+			           
+		        </div>
+
+		   {% endif %} 
+		    
+		</div>
+		{% endfor %}
+	</div>
+	<br/>
+	<div class="col-md-12 text-center">
+		<button class="btn btn-secondary btn-sm" onclick="getCheckboxSelected()">Buscar</button>
+	</div>
+{% endblock %}
+
+
+<!-- SCHOLAR -->
+{% block scholar %}
+<div class="embed-responsive embed-responsive-4by3">
+	<img id="loaderscholar" src="/static/loading_icon.gif" class="embed-responsive-item" style="height: 100%; width: 100%" alt="Cargando">
+
+	<iframe class="embed-responsive-item" style="visibility:hidden;" onload="this.style.visibility='visible';" id="framescholar" src="http://localhost:5000/scholar" width="100%"></iframe>
+</div>
+{% endblock %}
+<!-- FIN DE SCHOLAR -->
+
+
+<!-- MEDLINE -->
+{% block medline %}
+<div class="content embed-responsive embed-responsive-4by3">
+	<img id="loadermedline" src="/static/loading_icon.gif" class="embed-responsive-item" style="height: 100%; width: 100%" alt="Cargando">
+
+	<iframe class="embed-responsive-item" style="visibility:hidden;" onload="this.style.visibility='visible';" id="framemedline" src="http://localhost:5000/medline" width="100%"></iframe>
+</div>
+ {% endblock %}
+ <!-- FIN DE MEDLINE -->
+
+
+<!-- SCIELO -->
+{% block scielo %}
+<div class="embed-responsive embed-responsive-4by3">
+	<img id="loaderscielo" src="/static/loading_icon.gif" class="embed-responsive-item" style="height: 100%; width: 100%" alt="Cargando">
+
+	<iframe class="embed-responsive-item" style="visibility:hidden;" onload="this.style.visibility='visible';" id="framescielo" src="http://localhost:5000/scielo" width="100%"></iframe>
+</div>
+ {% endblock %}
+ <!-- FIN SCIELO -->
+
+{% block graph %}
+<div id="framegraph"></div>
+{% endblock %}
