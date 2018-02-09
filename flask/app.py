@@ -181,7 +181,7 @@ def parse():
     list_ner, string_ner = getNER(list_terms, text)
     parsed_text = getParsedText(text, list_terms)
     myPath = os.getcwd() + '/data/'
-    files = [myPath.strip() +'Medline.txt', myPath.strip() +'CIE-10.txt', myPath.strip() +'UMLS_03_50.txt']
+    files = [myPath.strip() +'Medline.txt', myPath.strip() +'CIE-10.txt', myPath.strip() +'UMLS_concept.txt']
     dic_sy = SearchCUIS.search(list_terms, files)
 
   return render_template('parsed_content.html', dic_sy=dic_sy , parsed_text=parsed_text)
