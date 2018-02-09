@@ -1,8 +1,3 @@
-'''
-Created on 30 ene. 2018
-
-@author: plubeda
-'''
 import re
 import requests
 import xml.etree.ElementTree as ET
