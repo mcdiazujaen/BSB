@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Wed Jan 24 11:09:47 2018
-
-@author: Andrew
-"""
 
 import scholarly
 import json
