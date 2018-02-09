@@ -1,8 +1,3 @@
-'''
-Created on 15 ene. 2018
-
-@author: plubeda
-'''
 import sys
 import os
 import json
