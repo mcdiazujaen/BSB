@@ -63,8 +63,17 @@ Los pasos para generar almacenar los recursos necesarios del sistema son:
     Traumatismo de nervios craneales;S04
     Xerosis del cutis;L853
     ```
+    1.4. **`relations.txt`**. Fichero con tripletas para el grafo.Ejemplo:
 
-2. Copiar los ficheros generados en la carpeta: `/flask/search_entities/data`
+    ```
+    C0000167;PAR_inverse_isa;C0582125
+    C0000167;RO_has_component;C0202112
+    ...
+    C0000726;RN_part_of;C1760038
+    C0000726;RO_analyzes;C0488570
+    ```
+
+2. Copiar los ficheros generados en la carpeta: `/flask/data`
 
 ### Instalación de librerías de NLTK
 
